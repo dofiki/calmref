@@ -1,0 +1,27 @@
+#.NET build output
+
+**/bin/ **/obj/
+
+# Visual Studio
+
+.vs/ *.user *.suo
+
+# IDE files
+
+.idea/ .vscode/
+
+#Logs
+
+*.log
+
+#Environment variables and secrets
+
+.env .env.* !.env.example
+
+#Local configuration containing secrets
+
+appsettings.Development.json secrets.json
+
+#OS files
+
+.DS_Store Thumbs.db
