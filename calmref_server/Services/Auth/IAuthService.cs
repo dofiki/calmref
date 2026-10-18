@@ -1,8 +1,5 @@
-using DTO;
-using calmref_server.Models;
-using calmref_server.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity.Data;
+using calmref_server.DTO.Auth;
+
 public interface IAuthService
 {
     public Task<RegisterResponseDto> RegisterAsync(UserDto request);

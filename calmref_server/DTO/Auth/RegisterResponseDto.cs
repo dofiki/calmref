@@ -1,4 +1,4 @@
-namespace DTO;
+namespace calmref_server.DTO.Auth;
 
 public class RegisterResponseDto
 {

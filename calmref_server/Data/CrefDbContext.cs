@@ -9,6 +9,7 @@ public class CrefDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<EmailOtp> EmailOtps => Set<EmailOtp>();
     public DbSet<UserCredential> UserCredentials => Set<UserCredential>();
+    public DbSet<Clip> Clips => Set<Clip>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,5 +27,10 @@ public class CrefDbContext : DbContext
                     .HasOne(e => e.UserCredential)
                     .WithOne(e => e.User)
                     .HasForeignKey<UserCredential>(e => e.userId);
+
+        modelBuilder.Entity<User>()
+                    .HasMany(e => e.Clips)
+                    .WithOne(e => e.User)
+                    .HasForeignKey(e => e.userId);
     }
 }

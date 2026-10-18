@@ -19,6 +19,36 @@ namespace calmref_server.Migrations
                 .HasAnnotation("ProductVersion", "10.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("calmref_server.Models.Clip", b =>
+                {
+                    b.Property<string>("clipId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("content")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("readOnly")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("title")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("userId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("clipId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Clips");
+                });
+
             modelBuilder.Entity("calmref_server.Models.EmailOtp", b =>
                 {
                     b.Property<Guid>("EmailOtpId")
@@ -107,6 +137,15 @@ namespace calmref_server.Migrations
                     b.ToTable("UserCredentials");
                 });
 
+            modelBuilder.Entity("calmref_server.Models.Clip", b =>
+                {
+                    b.HasOne("calmref_server.Models.User", "User")
+                        .WithMany("Clips")
+                        .HasForeignKey("userId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("calmref_server.Models.EmailOtp", b =>
                 {
                     b.HasOne("calmref_server.Models.User", "User")
@@ -131,6 +170,8 @@ namespace calmref_server.Migrations
 
             modelBuilder.Entity("calmref_server.Models.User", b =>
                 {
+                    b.Navigation("Clips");
+
                     b.Navigation("EmailOtp");
 
                     b.Navigation("UserCredential");

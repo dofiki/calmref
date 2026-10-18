@@ -1,4 +1,4 @@
-using DTO;
+using calmref_server.DTO.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]

@@ -1,4 +1,4 @@
-namespace DTO;
+namespace calmref_server.DTO.Auth;
 
 using System.ComponentModel.DataAnnotations;
 public class UserDto

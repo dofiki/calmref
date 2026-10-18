@@ -1,4 +1,4 @@
-using DTO;
+using calmref_server.DTO.Auth;
 using calmref_server.Models;
 using calmref_server.Data;
 using System.Security.Cryptography;

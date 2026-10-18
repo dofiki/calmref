@@ -1,3 +1,5 @@
+namespace calmref_server.DTO.Auth;
+
 public class TokenResponseDto
 {
     public string accessToken { get; set; } = string.Empty;
