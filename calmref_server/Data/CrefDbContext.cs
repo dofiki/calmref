@@ -13,10 +13,10 @@ public class CrefDbContext : DbContext
     public DbSet<ClipEditor> ClipEditors => Set<ClipEditor>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
+        // User 
         modelBuilder.Entity<User>()
-               .HasIndex(u => u.email)
-               .IsUnique();
+                    .HasIndex(u => u.email)
+                    .IsUnique();
 
         modelBuilder.Entity<User>()
                     .HasOne(e => e.EmailOtp)
@@ -28,11 +28,13 @@ public class CrefDbContext : DbContext
                     .WithOne(e => e.User)
                     .HasForeignKey<UserCredential>(e => e.userId);
 
+        // Clip
         modelBuilder.Entity<User>()
                     .HasMany(e => e.Clip)
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.userId);
 
+        // ClipEditor
         modelBuilder.Entity<Clip>()
                     .HasMany(e => e.ClipEditor)
                     .WithOne(e => e.Clip)
