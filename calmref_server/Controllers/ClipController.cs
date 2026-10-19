@@ -44,6 +44,14 @@ public class ClipController(IClipService clipService) : ControllerBase
 
     }
 
+    [HttpGet("{slug}/editors")]
+    public async Task<ActionResult<List<GetClipEditorDto>>> GetClipEditors(string slug)
+    {
+        var trimmedSlug = TrimSlug(slug);
+        var editors = await clipService.GetClipEditorsAsync(trimmedSlug);
+        return Ok(editors);
+    }
+
     public Guid? GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

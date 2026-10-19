@@ -6,4 +6,5 @@ public interface IClipService
     Task<CreateResponseDto> CreateClipAsync(CreateClipDto request, Guid? userId, string slug);
     Task<UpdateResponseDto> UpdateClipAsync(UpdateClipDto request, Guid? userId, string slug);
 
+    Task<List<GetClipEditorDto>> GetClipEditorsAsync(string slug);
 }

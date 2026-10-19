@@ -58,7 +58,13 @@ public class ClipService(CrefDbContext context) : IClipService
     }
     public async Task<UpdateResponseDto> UpdateClipAsync(UpdateClipDto request, Guid? userId, string slug)
     {
-        var clip = await context.Clips.FirstOrDefaultAsync(c => c.clipId == slug);
+        var clip = await context.Clips
+                    .FirstOrDefaultAsync(c => c.clipId == slug);
+
+        var clipEditor = await context.ClipEditors
+                    .FirstOrDefaultAsync(e => e.clipId == slug);
+
+        var editor = await context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.userId == userId);
 
         if (clip is null) throw new NotFoundException("Clip not found!");
 
@@ -74,6 +80,15 @@ public class ClipService(CrefDbContext context) : IClipService
         clip.readOnly = isOwner ? request.readOnly : clip.readOnly;
         clip.updatedAt = now;
 
+        context.ClipEditors.Add(new ClipEditor
+        {
+            clipEditorId = Guid.NewGuid(),
+            clipId = clip.clipId,
+            userId = userId,
+            editedAt = now
+        });
+
+
         await context.SaveChangesAsync();
 
         return new UpdateResponseDto
@@ -84,5 +99,19 @@ public class ClipService(CrefDbContext context) : IClipService
             updatedAt = now
         };
     }
+    public async Task<List<GetClipEditorDto>> GetClipEditorsAsync(string slug)
+    {
 
+        var editors = await context.ClipEditors
+                            .Where(e => e.clipId == slug)
+                            .Select(e => new GetClipEditorDto
+                            {
+                                username = e.User!.username ?? "Anonymous",
+                                editedAt = e.editedAt
+                            })
+                            .ToListAsync();
+
+        return editors;
+
+    }
 }

@@ -19,6 +19,36 @@ namespace calmref_server.Migrations
                 .HasAnnotation("ProductVersion", "10.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("ClipEditor", b =>
+                {
+                    b.Property<Guid>("clipEditorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("clipId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("clipId1")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("editedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("userId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("clipEditorId");
+
+                    b.HasIndex("clipId");
+
+                    b.HasIndex("clipId1");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("ClipEditors");
+                });
+
             modelBuilder.Entity("calmref_server.Models.Clip", b =>
                 {
                     b.Property<string>("clipId")
@@ -137,10 +167,31 @@ namespace calmref_server.Migrations
                     b.ToTable("UserCredentials");
                 });
 
+            modelBuilder.Entity("ClipEditor", b =>
+                {
+                    b.HasOne("calmref_server.Models.Clip", "Clip")
+                        .WithMany("ClipEditor")
+                        .HasForeignKey("clipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("calmref_server.Models.Clip", null)
+                        .WithMany("ClipEditors")
+                        .HasForeignKey("clipId1");
+
+                    b.HasOne("calmref_server.Models.User", "User")
+                        .WithMany("ClipEditors")
+                        .HasForeignKey("userId");
+
+                    b.Navigation("Clip");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("calmref_server.Models.Clip", b =>
                 {
                     b.HasOne("calmref_server.Models.User", "User")
-                        .WithMany("Clips")
+                        .WithMany("Clip")
                         .HasForeignKey("userId");
 
                     b.Navigation("User");
@@ -168,9 +219,18 @@ namespace calmref_server.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("calmref_server.Models.Clip", b =>
+                {
+                    b.Navigation("ClipEditor");
+
+                    b.Navigation("ClipEditors");
+                });
+
             modelBuilder.Entity("calmref_server.Models.User", b =>
                 {
-                    b.Navigation("Clips");
+                    b.Navigation("Clip");
+
+                    b.Navigation("ClipEditors");
 
                     b.Navigation("EmailOtp");
 

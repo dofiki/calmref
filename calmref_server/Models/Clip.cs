@@ -11,4 +11,7 @@ public class Clip
     public DateTime createdAt { get; set; }
     public DateTime? updatedAt { get; set; }
 
+    // One clip has many editors
+    public List<ClipEditor> ClipEditor { get; set; } = new();
+
 }

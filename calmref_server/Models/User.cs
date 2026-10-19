@@ -18,5 +18,8 @@ public class User
 
     public EmailOtp? EmailOtp { get; set; }
     public UserCredential? UserCredential { get; set; }
-    public List<Clip> Clips { get; set; } = new();
+    public List<Clip> Clip { get; set; } = new();
+
+    // clips this user has edited
+    public List<ClipEditor> ClipEditors { get; set; } = new();
 }
