@@ -22,7 +22,6 @@ public class UserServiceTests : IDisposable
 
     public void Dispose() => _context.Dispose();
 
-    // GetUserAsync
 
     [Fact]
     public async Task GetUser_ExistingUser_ReturnsDtoWithUsernameAndCreatedAt()
@@ -39,29 +38,42 @@ public class UserServiceTests : IDisposable
         Assert.Equal(createdAt, result.createdAt);
     }
 
+
     [Fact]
-    public async Task GetUser_UnknownUser_ThrowsNotFoundException()
+    public async Task GetUser_UserDoesNotExist_ThrowsNotFoundException()
     {
-        await Assert.ThrowsAsync<NotFoundException>(() => _sut.GetUserAsync(Guid.NewGuid()));
+        var userId = Guid.NewGuid();
+
+        await Assert.ThrowsAsync<NotFoundException>(
+            () => _sut.GetUserAsync(userId)
+        );
     }
 
-    // GetUserClipsAsync
 
     [Fact]
     public async Task GetUserClips_UserHasClips_ReturnsOnlyThatUsersClips()
     {
         var userId = Guid.NewGuid();
-        var otherUserId = Guid.NewGuid();
-        _context.Clips.AddRange(
-            new Clip { clipId = Guid.NewGuid().ToString(), userId = userId, title = "mine 1", content = "a" },
-            new Clip { clipId = Guid.NewGuid().ToString(), userId = userId, title = "mine 2", content = "b" },
-            new Clip { clipId = Guid.NewGuid().ToString(), userId = otherUserId, title = "not mine", content = "c" });
+        var created = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var updated = new DateTime(2026, 2, 1, 0, 0, 0, DateTimeKind.Utc);
+        _context.Clips.Add(new Clip
+        {
+            clipId = Guid.NewGuid().ToString(),
+            userId = userId,
+            title = "title",
+            content = "body",
+            createdAt = created,
+            updatedAt = updated
+        });
         await _context.SaveChangesAsync();
 
         var result = await _sut.GetUserClipsAsync(userId);
 
-        Assert.Equal(2, result.Count);
-        Assert.DoesNotContain(result, c => c.title == "not mine");
+        var clip = Assert.Single(result);
+        Assert.Equal("title", clip.title);
+        Assert.Equal("body", clip.content);
+        Assert.Equal(created, clip.createdAt);
+        Assert.Equal(updated, clip.updatedAt);
     }
 
     [Fact]
