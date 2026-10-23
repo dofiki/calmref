@@ -34,9 +34,10 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IClipService, ClipService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddTransient<ISmtpService, SmtpService>();
 
 var app = builder.Build();
 
