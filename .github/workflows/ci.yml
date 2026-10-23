@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/Checkout@v4
+      uses: actions/checkout@v4
 
     - name: Setup .Net
       uses: actions/setup-dotnet@v4
@@ -21,10 +21,10 @@ jobs:
         dotnet-version: '10.0.x'
 
     - name: Restore Dependencies
-      run: dotnet Restore
+      run: dotnet restore calmref_server/calmref.Api/calmref.Api.csproj
 
     - name: Build Solution
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build calmref_server/calmref.Api/calmref.Api.csproj --no-restore --configuration Release
 
     - name: Run Tests
-      run: dotnet test --no-build --configuration Release
+      run: dotnet test calmref_server/calmref.Api/calmref.Api.csproj --no-build --configuration Release
