@@ -36,7 +36,7 @@ public class ClipService(CrefDbContext context) : IClipService
         {
             clipId = slug,
             title = request.title,
-            content = request.  content,
+            content = request.content,
             // if first part is true we accept the request 
             // otherwise it is false
             readOnly = userId is not null && request.readOnly,

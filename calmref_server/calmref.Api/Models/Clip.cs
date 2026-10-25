@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace calmref_server.Models;
 
 public class Clip
@@ -6,7 +8,7 @@ public class Clip
     public Guid? userId { get; set; }
     public User? User { get; set; }
     public string? title { get; set; } = string.Empty;
-    public string? content { get; set; } = string.Empty;
+    public string? content { get; set; }
     public bool readOnly { get; set; } = false;
     public DateTime createdAt { get; set; }
     public DateTime? updatedAt { get; set; }
