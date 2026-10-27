@@ -3,31 +3,7 @@ import { useState } from "react";
 import type { ReactNode } from "react"
 import { getUserFromToken } from "../utils/jwt";
 import { AuthContext } from "../context/AuthContext"
-
-export interface RequestPayload {
-    email: string,
-    password: string
-}
-
-export interface User {
-    id: string;
-    username: string;
-}
-
-export interface TokenResponse {
-    accessToken: string,
-    refreshToken: string
-}
-
-export interface RegisterResponse {
-    userId: string,
-    message: string
-}
-
-export interface verfiyOtpRequest {
-    userId: string,
-    otp: string
-}
+import type { User, RequestPayload, VerfiyOtpRequest, TokenResponse } from "../types/index";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
 
@@ -60,7 +36,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     async function verifyOtp({
         userId,
         otp,
-    }: verfiyOtpRequest) {
+    }: VerfiyOtpRequest) {
         return fetch(BASE_URL + "/verify-otp", {
             method: "POST",
             headers: {
@@ -69,7 +45,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             body: JSON.stringify({ userId, otp }),
         });
     }
-
     async function login(payload: RequestPayload): Promise<void> {
 
         const res = await fetch(`${BASE_URL}/login`, {
@@ -96,15 +71,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(decodedUser);
 
     }
-
-
     function logout() {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         setUser(null);
-
     }
-
     return (
         <AuthContext.Provider value={{ user, register, verifyOtp, login, logout }}>
             {children}

@@ -1,12 +1,9 @@
 import { TextField } from "@mui/material"
-
-interface InputFieldProp {
-    email: string,
-    handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    usernameError: string,
-}
+import { type InputFieldProp } from "../../types/index"
 
 export const InputField = ({ email, handleEmailChange, usernameError }: InputFieldProp) => {
+
+
     return (
         <TextField
             required
