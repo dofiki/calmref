@@ -68,16 +68,16 @@ public class AuthService(CrefDbContext context, IEmailSender emailSender, IConfi
         if (user is null) throw new NotFoundException("No account Found !");
 
         if (user?.EmailOtp is null)
-            throw new ApplicationException("Invalid or expired code.");
+            throw new BadRequestException("Invalid or expired code.");
 
         if (user.EmailOtp.LockedUntil > now)
         {
-            throw new ApplicationException("Too many attempts. Try again later.");
+            throw new TooManyAttemptsException("Too many attempts. Try again later.");
         }
 
         if (user.EmailOtp.OtpExpiresAt < now)
         {
-            throw new ApplicationException("Invalid or expired code.");
+            throw new BadRequestException("Invalid or expired code.");
         }
     }
 
