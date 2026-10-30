@@ -24,3 +24,15 @@ export function validatePassword(password: string): string {
 
     return "";
 }
+
+export function validateUrl(value: string) {
+    if (!value.trim()) {
+        return 'This field is required';
+    }
+
+    if (!/^[a-zA-Z0-9]+$/.test(value)) {
+        return 'Only letters and numbers are allowed; no symbols or spaces';
+    }
+
+    return "";
+}

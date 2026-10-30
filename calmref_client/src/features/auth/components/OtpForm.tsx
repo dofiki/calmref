@@ -1,6 +1,6 @@
 import { Button } from "@mui/material"
 import { OtpField } from "./ui/OtpField"
-import { type OtpFormProp } from "../types"
+import { type OtpFormProp } from "../types/index"
 
 export const OtpForm = ({ email, setOtp, error, loading, onOtpSubmit }: OtpFormProp) => {
     return (

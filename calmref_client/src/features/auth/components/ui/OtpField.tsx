@@ -4,10 +4,7 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
 } from "./input-otp"
-
-interface OtpFieldProp {
-    setOtp: React.Dispatch<React.SetStateAction<string>>;
-}
+import { type OtpFieldProp } from "../../types/index"
 
 export const OtpField = ({ setOtp }: OtpFieldProp) => {
     return (

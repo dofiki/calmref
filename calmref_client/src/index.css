@@ -1,1 +1,53 @@
 @import "tailwindcss";
+
+
+.editor-container {
+    width: 550px;
+    max-width: 100%;
+    margin: 30px auto;
+}
+
+/* toolbar */
+.editor-container .ql-toolbar.ql-snow {
+    border-radius: 8px 8px 0 0;
+    background: #ffffff;
+}
+
+/* toolbar icons  */
+.editor-container .ql-toolbar.ql-snow .ql-stroke {
+    stroke: rgb(13, 66, 3);
+}
+
+.editor-container .ql-toolbar.ql-snow .ql-fill {
+    fill: rgb(13, 66, 3);
+}
+
+/* typing area  */
+.editor-container .ql-container {
+    height: 400px;
+    font-size: 16px;
+    border-radius: 0 0 8px 8px;
+    background-color: white;
+}
+
+/* text area */
+.editor-container .ql-editor {
+    min-height: 100%;
+    padding: 16px;
+    color: black;
+}
+
+/* heading */
+.toolbar-heading {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* subheading */
+.toolbar-subheading {
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+    margin: 0 0 10px;
+}
