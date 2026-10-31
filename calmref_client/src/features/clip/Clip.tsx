@@ -14,6 +14,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { Typography } from "@mui/material";
+import { formatEditedAt } from "../../utils/formatEditedAt";
 
 export interface editor {
     username: string
@@ -241,19 +242,6 @@ const Clip = () => {
         setContent(data.content);
         setSwitchStatus(data.readOnly);
     }
-
-    const formatEditedAt = (dateString: string) => {
-        const date = new Date(dateString);
-
-        return date.toLocaleString('en-US', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-        });
-    };
 
     return (
         <>

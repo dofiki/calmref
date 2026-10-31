@@ -4,6 +4,7 @@ import { BackgroundSVG } from '../../components/BackgroundSVG';
 import "quill/dist/quill.snow.css";
 import { useNavigate, useParams } from 'react-router';
 
+
 export function Home() {
     const { slug } = useParams();
     const [url, setUrl] = useState(slug ?? "");
@@ -12,13 +13,15 @@ export function Home() {
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.currentTarget.value;
-
         setUrl(value);
         setError(validateUrl(value));
     }
 
-    async function handleSubmit(e: React.MouseEvent) {
+    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        if (error || !url.trim()) return;
+
         navigate("/clip/" + url);
     }
 
@@ -45,17 +48,29 @@ export function Home() {
                     <div className='flex flex-col gap-5 md:flex-row h-8 items-center justify-center relative'>
 
                         <div className='relative'>
-                            <input type='text' maxLength={74} onChange={handleChange} value={url}
-                                className='p-4 outline-2 hover:outline-4 hover:outline-blue-500
-                                 rounded-full w-70 sm:w-80 md:w-100 lg:w-150  transition-all delay-75'
-                                placeholder='Enter here.' />
+                            <form
+                                onSubmit={handleSubmit}
+                                className="relative"
+                            >
+                                <input
+                                    type="text"
+                                    maxLength={74}
+                                    onChange={handleChange}
+                                    value={url}
+                                    className="p-4 outline-2 hover:outline-4 hover:outline-blue-500
+        rounded-full w-70 sm:w-80 md:w-100 lg:w-150 transition-all delay-75"
+                                    placeholder="Enter here."
+                                />
 
-                            <button className='border p-2 rounded-full absolute right-2 top-2 
-                            bg-white hover:bg-blue-100 text-black outline-1
-                             outline-black cursor-pointer transition-all delay-75'
-                                onClick={handleSubmit}>
-                                Submit
-                            </button>
+                                <button
+                                    type="submit"
+                                    className="border p-2 rounded-full absolute right-2 top-2
+        bg-white hover:bg-blue-100 text-black outline-1
+        outline-black cursor-pointer transition-all delay-75"
+                                >
+                                    Submit
+                                </button>
+                            </form>
                         </div>
 
                         <div className='text-red-500 absolute top-10 text-sm 
