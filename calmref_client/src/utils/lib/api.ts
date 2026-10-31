@@ -93,3 +93,19 @@ export async function UpdateClip(slug: string, updatedClip: UpdateClipItem) {
 
     return res
 }
+
+export async function GetClipEditors(slug: string) {
+    const res = await fetch(
+        `http://localhost:5024/api/clip/${slug}/editors`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+
+        }
+    );
+
+    return res;
+}
